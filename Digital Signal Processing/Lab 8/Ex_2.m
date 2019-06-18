@@ -1,0 +1,10 @@
+clc;
+clear all;
+close all;
+a=imread('cameraman.tif','tif');
+subplot(221),imshow(a),title('image');
+b=histeq(a,255);
+subplot(222),imshow(b),title('contrast image');
+subplot(224);
+plot(imhist(b));
+subplot(223),plot(imhist(a));

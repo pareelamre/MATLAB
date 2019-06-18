@@ -1,0 +1,10 @@
+clc;
+clear all;
+close all;
+a=imread('cameraman.tif','tif');
+b=imnoise(a,'salt & pepper');
+subplot(211);
+imshow(b);
+c=medfilt2(b);
+subplot(212);
+imshow(c);
