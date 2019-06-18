@@ -1,0 +1,20 @@
+clc;
+close all;
+clear;
+
+b = [1 -1];
+a = [1 0 -0.81];
+y = [2 2 ];
+x = [1/0.7 0 ];
+xic = filtic(b,a,y,x);
+bx = [1/0.7 0 0];
+ax = [0 1 -0.7];
+ay = conv(a,ax);
+disp('ay = '),disp(ay);
+by = conv(b,bx) + conv(xic,ax);
+disp('by = '),disp(by);
+[r,p,k] = residuez(by,ay);
+disp('Residues '),disp(r),disp('Poles'),disp(p),disp('Direct Terms'),disp(k);
+n = 0:20;
+g = filter(by,ay,((0.7).^n).*[(n+1)>=0]);
+stem(g),title('Output');
