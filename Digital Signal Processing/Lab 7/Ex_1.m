@@ -1,0 +1,12 @@
+clc;
+close all;
+wp=0.2*pi;
+ws=0.3*pi;
+rp=0.2;
+rs=50;
+df=(ws-wp)/(2*pi);
+B=0.1102*(rs-8.7);
+N=ceil((rs-7.95)/(14.36*df))+1;
+b=fir1(N,0.2,kaiser(N+1,B));
+[H,W]=freqz(b,1,512);
+plot(W/pi,20*log10(abs(H)));

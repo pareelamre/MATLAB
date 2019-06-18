@@ -1,0 +1,18 @@
+df=400/2000-300/2000;
+dp=600/2000-500/2000;
+ds=600/2000-300/2000;
+C=(0.01201*(log10(dp))^2+0.09664*(log10(dp))-0.51325)*log10(ds)+((0.00203*(log10(dp))^2)-0.5705*log10(dp)-0.44314);
+G=-14.61*log10(dp/ds)-16.9;
+M=C./(df)-G.*(df);
+M=floor(M);
+alpha = (M-1)/2;
+Hrs = [0,0,0,1,1,ones(1,M-5)];
+k1 = 0: floor((M-1)/2);
+k2 = floor((M-1)/2)+1:M-1;
+angH = [-alpha*(2*pi)*k1/M, alpha*(2*pi)*(M-k2)/M];
+H = Hrs.*exp(j*angH);
+h = real(ifft(H,M));
+[H,W]=freqz([h],1,1024);
+plot(W/pi,20*log10(abs(H))), zoom on, grid on;
+title('FIR LPF using frequency sampling design');
+xlabel('Normalized Frequency'), ylabel('Gain in dB');
