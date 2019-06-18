@@ -1,0 +1,18 @@
+clc, close all;
+wp = 30;
+ws = 40;
+rp = 1;
+rs = 30;
+T=0.01;
+[Nb, wcb] = buttord(wp,ws,rp,rs,'s');
+[bb_s, ab_s] = butter(Nb,wcb,'s');
+[bb_z1, ab_z1] = bilinear(bb_s,ab_s,1/T);
+[Hbd, wbd] = freqz(bb_z1,ab_z1); 
+subplot(211);
+ plot(wbd/pi,20*log10(abs(Hbd)));
+ title('bilinear');
+[bb_z2, ab_z2] = impinvar(bb_s,ab_s);
+[Hbd, wbd] = freqz(bb_z2,ab_z2);
+subplot(212);
+plot(wbd/pi,20*log10(abs(Hbd)));
+title('impulse invariance');
